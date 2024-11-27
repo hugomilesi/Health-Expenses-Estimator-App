@@ -1,0 +1,44 @@
+<!-- predictions/templates/predictions/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Expenses Prediction</title>
+</head>
+<body>
+    <h2>Health Expenses Prediction</h2>
+    <form id="predictionForm" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="predictedCost" style="display:none;">
+        <h3>Predicted Health Cost: $<span id="costValue"></span></h3>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').onsubmit = function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            fetch("{% url 'model_predict' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.predicted_cost) {
+                    document.getElementById('costValue').innerText = data.predicted_cost.toFixed(2);
+                    document.getElementById('predictedCost').style.display = 'block';
+                }
+            });
+        };
+    </script>
+</body>
+</html>
