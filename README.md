@@ -1,6 +1,7 @@
 
 
 # Health Expenses Prediction
+![alt text](image.png)
 
 The **Health Expenses Prediction** project is a web-based application designed to predict healthcare expenses based on user inputs such as personal, medical, and demographic data. The goal of this project is to provide insights into potential healthcare costs, enabling users to plan their finances more effectively.
 
@@ -31,11 +32,9 @@ If you're interested in exploring how I trained this model, feel free to check i
 
 
 
-
-
 # TODO's
 
-- integrate to an online PostGre database.
+- integrate to an online PostGre database. ✅
 - Create a CRUD for prediction history management.
 
 
