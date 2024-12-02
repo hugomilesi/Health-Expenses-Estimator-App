@@ -30,10 +30,12 @@ If you're interested in exploring how I trained this model, feel free to check i
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
-
+# How to use
+- git clone this repo.
+- pip install -r requirements.txt
+- ```python health_expenses/manage.py runserver```
 
 # TODO's
-
 - integrate to an online PostGre database. ✅
 - Create a CRUD for prediction history management.
 
