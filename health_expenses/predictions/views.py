@@ -75,6 +75,21 @@ def model_predict(request):
         form = PredictionForm()
     return render(request, 'prediction.html', {'form': form, "user_predictions": user_predictions})
 
+def delete_prediction(request, id):
+    get_todo = Prediction.objects.get(user = request.user, id = id)
+    get_todo.delete()
+    return redirect("model_predict")
+
+@login_required
+def clear_all_predictions(request):
+    if request.method == 'POST':
+        try:
+            # Delete all predictions for the current user
+            Prediction.objects.filter(user=request.user).delete()
+            return JsonResponse({'message': 'All predictions cleared successfully!'})
+        except Exception as e:
+            return JsonResponse({'error': f'Failed to clear predictions: {str(e)}'}, status=500)
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 
 # Registro de um novo usuário

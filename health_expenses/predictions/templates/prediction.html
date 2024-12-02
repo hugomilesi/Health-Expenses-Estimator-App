@@ -104,18 +104,31 @@
                 <button id="toggleHistoryButton" class="w-full mt-6 text-blue-600 py-2 px-4 rounded-lg hover:bg-indigo-100 focus:outline-none">Show Prediction History</button>
 
                 <!-- Full Prediction History Section -->
+                <!-- Full Prediction History Section -->
                 <div id="historySection" class="mt-6 hidden">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Prediction History</h3>
+                    <div class="flex justify-center mb-4"> <!-- Centering the button -->
+                        <button id="clearHistoryButton" class="text-white bg-red-600 py-1 px-3 rounded hover:bg-red-700">
+                            Clear All
+                        </button>
+                    </div>
                     <ul>
                         {% for prediction in user_predictions %}
-                            <li class="border-b py-2">
-                                <p class="text-sm text-gray-800"><strong>Predicted cost:</strong> ${{ prediction.predicted_cost }}</p>
-                                <p class="text-xs text-gray-500"><strong>Sex:</strong> {{ prediction.sex }}</p>
-                                <p class="text-xs text-gray-500"><strong>Age:</strong> {{ prediction.age }}</p>
-                                <p class="text-xs text-gray-500"><strong>Region:</strong> {{ prediction.region }}</p>
-                                <p class="text-xs text-gray-500"><strong>Children:</strong> {{ prediction.children }}</p>
-                                <p class="text-xs text-gray-500"><strong>Smoker:</strong> {{ prediction.smoker }}</p>
-                                <p class="text-xs text-gray-500"><strong>BMI:</strong> {{ prediction.bmi }}</p>
+                            <li class="border-b py-2 flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm text-gray-800"><strong>Predicted cost:</strong> ${{ prediction.predicted_cost }}</p>
+                                    <p class="text-xs text-gray-500"><strong>Sex:</strong> {{ prediction.sex }}</p>
+                                    <p class="text-xs text-gray-500"><strong>Age:</strong> {{ prediction.age }}</p>
+                                    <p class="text-xs text-gray-500"><strong>Region:</strong> {{ prediction.region }}</p>
+                                    <p class="text-xs text-gray-500"><strong>Children:</strong> {{ prediction.children }}</p>
+                                    <p class="text-xs text-gray-500"><strong>Smoker:</strong> {{ prediction.smoker }}</p>
+                                    <p class="text-xs text-gray-500"><strong>BMI:</strong> {{ prediction.bmi }}</p>
+                                </div>
+                                <a href="{% url 'delete' prediction.id %}">
+                                    <button type ="submit" class="delete-button text-white bg-red-600 py-1 px-3 rounded hover:bg-red-700">
+                                        Delete
+                                    </button>
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -132,7 +145,7 @@
                 this.textContent = 'Hide Prediction History';
             } else {
                 historySection.classList.add('hidden');
-                this.textContent = 'Show Prediction History';
+                this.textContent = 'Show Prediction History(Reload the page to update)';
             }
         });
 
@@ -152,6 +165,27 @@
                 resultDiv.classList.remove('hidden');  // Display the result
             });
         });
+
+        // Delete all
+        document.getElementById('clearHistoryButton').addEventListener('click', function() {
+            fetch("{% url 'clear_all_predictions' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Remove all items from the history section
+                    document.getElementById('historySection').innerHTML = '<p class="text-gray-500 text-center">No history available.</p>';
+                } else {
+                    alert('Failed to clear history. Please try again.');
+                }
+            });
+        });
+
+        
     </script>
+
 </body>
 </html>
