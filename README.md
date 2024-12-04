@@ -37,6 +37,6 @@ If you're interested in exploring how I trained this model, feel free to check i
 
 # TODO's
 - integrate to an online PostGre database. ✅
-- Create a CRUD for prediction history management.
+- Create a CRUD for prediction history management.✅
 
 
