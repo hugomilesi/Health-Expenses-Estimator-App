@@ -12,25 +12,18 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv('health_expenses/.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h05iw0lnbqab3wh59iq8xwm$f$nx_r)uzw60y_%4+al623bvm)'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-# Database connection
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PW = os.getenv("DB_PW")
-DB_HOST = os.getenv("DB_HOST")
-
+PRODUCTION_DB = os.getenv("RAIWAY_DB")
+ENVIRONMENT = os.getenv("ENVIRONMENT")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -83,25 +76,40 @@ WSGI_APPLICATION = 'health_expenses.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER':DB_USER,
-        'PASSWORD': DB_PW,
-        'HOST': DB_HOST,
-        'PORT': '10694'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
 
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DATABASES['default'] = dj_database_url.parse(PRODUCTION_DB)
+    
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': DB_NAME,
+#         'USER':DB_USER,
+#         'PASSWORD': DB_PW,
+#         'HOST': DB_HOST,
+#         'PORT': '10694'
+#     }
+# }
+
+# Railway DB
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': PGDATABASE,
+#         'USER': PGUSER,
+#         'PASSWORD': PGPASSWORD,
+#         'HOST': PGHOST,
+#         'PORT': PGPORT,
+#     }
+# }
 
 
 # Password validation
