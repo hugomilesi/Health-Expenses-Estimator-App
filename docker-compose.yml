@@ -1,0 +1,9 @@
+services:
+  web:
+    command: python health_expenses/manage.py runserver 0.0.0.0:8000
+    build: .
+    volumes:
+      - .:/code
+    ports: 
+      - "8000:8000"
+

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 import pandas as pd 
 from .models import Prediction
+import tensorflow
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -14,8 +15,11 @@ from .utils import load_model, load_preprocessor
 import os
 
 # Carregar o modelo pickle
-MODEL_PATH = "C:/Users/Usuario/Desktop/Projects/ML_Health_expenses/health_expenses/predictions/models/model.pkl"
-PREPROCESSOR_PATH = "C:/Users/Usuario/Desktop/Projects/ML_Health_expenses/health_expenses/predictions/models/preprocessor.pkl"
+# MODEL_PATH = "C:/Users/Usuario/Desktop/Projects/ML_Health_expenses/health_expenses/predictions/models/model.pkl"
+# PREPROCESSOR_PATH = "C:/Users/Usuario/Desktop/Projects/ML_Health_expenses/health_expenses/predictions/models/preprocessor.pkl"
+
+MODEL_PATH = "health_expenses/predictions/models/model.pkl"
+PREPROCESSOR_PATH = "health_expenses/predictions/models/preprocessor.pkl"
 
 preprocessor = load_preprocessor(PREPROCESSOR_PATH)
 model = load_model(MODEL_PATH)
