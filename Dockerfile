@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-COPY core/predictions/models app/core/predictions/models
+COPY predictions/models app/predictions/models
 
 COPY . .
 
