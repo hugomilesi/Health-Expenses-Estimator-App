@@ -1,9 +1,10 @@
 services:
   web:
-    command: python health_expenses/manage.py runserver 0.0.0.0:8000
+    # command: python core/health_expenses/manage.py runserver 0.0.0.0:8000
+    command: waitress-serve --listen=*:8000 health_expenses.wsgi:application
     build: .
     volumes:
-      - .:/code
+      - .:/app
     ports: 
       - "8000:8000"
 

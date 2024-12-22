@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-COPY health_expenses/predictions/models app/health_expenses/predictions/models
+COPY core/predictions/models app/core/predictions/models
 
 COPY . .
 
@@ -18,5 +18,5 @@ EXPOSE 8000
 # 
 # CMD ["python", "health_expenses/manage.py", "runserver", "0.0.0.0.8000"]
 
-CMD ["waitress-serve", "--listen=*:8000", "health_expenses.health_expenses.wsgi:application"]
+#CMD ["waitress-serve", "--listen=*:8000", "health_expenses.wsgi:application"]
 
