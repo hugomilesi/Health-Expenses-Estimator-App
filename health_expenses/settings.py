@@ -29,6 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [".onrender.com", "localhost"]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://health-expenses-estimator-app.onrender.com',
+]
 
 # Application definition
 
