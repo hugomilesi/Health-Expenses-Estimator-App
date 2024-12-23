@@ -27,7 +27,7 @@ ENVIRONMENT = os.getenv("ENVIRONMENT")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".onrender.com"]
+ALLOWED_HOSTS = [".onrender.com", "localhost"]
 
 
 # Application definition
